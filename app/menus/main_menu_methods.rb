@@ -8,7 +8,7 @@
     splash
 
     login_menu_display
-    login_prompt
+    login_prompt(user_prompt)
 
   end
 
@@ -43,8 +43,7 @@
   end
 
   #Prompt user for their menu choice, move to next section or quit based on user choice
-  def login_prompt
-    menu_choice = user_prompt
+  def login_prompt(selection)
 
     #go to login if user desires
     if menu_choice == "1"
@@ -61,6 +60,8 @@
     else
       puts "Sorry, incorrect option."
       login_menu_display
+      login_prompt(user_prompt)
+
     end
   end
 
