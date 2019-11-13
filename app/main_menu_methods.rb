@@ -89,9 +89,13 @@
 
   #Menu option for creating new user
   def user_create
+    # Users.destroy_all
     @user = User.new
     puts "What is your name?"
     name_input = user_prompt
+
+    puts "What is your desired Username?"
+    username_input = user_prompt
 
     puts "What is your location? example: \"NY\""
     location_input = user_prompt
@@ -102,6 +106,7 @@
     @user.name = name_input
     @user.state = location_input
     @user.password = password_input
+    @user.username = user_input
 
     puts "Congratulations! You created an account!"
     puts @user
