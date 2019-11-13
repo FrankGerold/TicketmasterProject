@@ -75,7 +75,7 @@
       puts "Please try again"
       account_login
     else
-      password_request (@user.password)
+      password_request
     #
     # #If the inputted user already has a name property, it existed beforehand.
     # if @user
@@ -106,23 +106,25 @@
     @user.name = name_input
     @user.state = location_input
     @user.password = password_input
-    @user.username = user_input
+    @user.username = username_input
+
 
     puts "Congratulations! You created an account!"
-    puts @user
-    @user
+    @user.save
     # Initialize user menu methods here
 
 
   end
 
   #start process to test password
-  def password_request (correct_password)
+  def password_request
     puts "Please enter your password."
-
     password_input = user_prompt
-    if password_input == correct_password
+    if password_input == @user.password
       puts "Successful login!"
+      @user
+
+
       # Initialize user menu methods here
 
     #user can quit this process
