@@ -2,8 +2,7 @@ class Menu
 
   attr_reader :user, :username, :password
 
-#Basic runner for the main menu
-
+#Basic runner for the main menu, moving through login options
   def menu_runner
 
     splash
@@ -11,10 +10,8 @@ class Menu
     login_menu_display
     login_prompt
 
-
-
-
   end
+
 
 #Helper Methods below!
 
@@ -26,13 +23,15 @@ class Menu
       "
   end
 
+
   def user_prompt
-    puts ""
     user_input = gets.chomp
   end
 
+
   def account_login
     puts "Enter Username"
+
     username_input = user_prompt
     @user = User.find_or_create_by(username: username_input)
 
@@ -40,12 +39,24 @@ class Menu
       password_request
     else
 
+    end
+  end
+
+
+  def password_request
+    puts "Please enter your password."
+
+    password_input = user_prompt
+    if password == user.password
+
+
   def login_menu_display
     puts "Welcome to Ticket Search app!"
     puts "What would you like to do?"
     puts "1. Create Account/Login"
     puts "2. Exit"
   end
+
 
     def login_prompt
       menu_choice = user_prompt
@@ -59,7 +70,7 @@ class Menu
       else
         puts "Sorry, incorrect option."
         login_menu
-        
+
       end
     end
 
