@@ -1,6 +1,6 @@
-class Menu
-
-  attr_reader :user, :username, :password
+# class Menu
+#
+#   attr_reader :user, :username, :password
 
 #Basic runner for the main menu, moving through login options
   def menu_runner
@@ -29,7 +29,8 @@ class Menu
 
   #General method for grabbing user inputs
   def user_prompt
-    user_input = gets.chomp
+    #user_input =
+    STDIN.gets.chomp
   end
 
   #Menu options that pop up after splash screen
@@ -45,11 +46,11 @@ class Menu
     menu_choice = user_prompt
 
     #go to login if user desires
-    if menu_choice = 1
+    if menu_choice == "1"
       account_login
 
     # Or quit
-    elsif menu_choice = 2
+  elsif menu_choice == "2"
       exit
 
     #User should choose a valid option
@@ -105,7 +106,7 @@ class Menu
       # Initialize user menu methods here
 
     #user can quit this process
-    elsif password_input == "quit" || "exit"
+    elsif password_input == "quit" || password_input == "exit"
       exit
 
     else
@@ -114,16 +115,3 @@ class Menu
       password_request
     end
   end
-
-
-
-
-
-
-
-
-
-
-
-
-end
