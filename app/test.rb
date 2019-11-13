@@ -1,11 +1,10 @@
-class EventApp
-
-
-  attr_reader :user, :friend
-
-
-    def run
-
-      main_menu_runner
-
-end
+# class EventApp
+#
+#   attr_accessor :friend
+#
+#   def run
+#
+#     main_menu_runner
+#
+#   end
+# end

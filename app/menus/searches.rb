@@ -1,6 +1,10 @@
 
-    def user_prompt
-        STDIN.gets.chomp
+    def event_search
+        puts "What State would you like to search in? Ex: 'NY'"
+        location_input = user_prompt
+        puts "What would you like to search by?"
+        search_type_input = user_prompt
+        event_search_menu(search_type_input,location_input)
     end
 
     def event_search_menu(input,location)
@@ -15,13 +19,6 @@
         end
     end
 
-    def event_search
-        puts "What State would you like to search in? Ex: 'NY'"
-        location_input = user_prompt
-        puts "What would you like to search by?"
-        search_type_input = user_prompt
-        event_search_menu(search_type_input,location_input)
-    end
 
 
 
@@ -53,12 +50,10 @@
         puts "Which event would you like to choose?"
         event_selection = user_prompt
         event_picked = selection_hash[event_selection.to_i]
-        binding.pry
         event_detailed_view(event_picked)
     end
 
     def event_detailed_view(event)
-        binding.pry
         puts "#{event["name"]} #{event["date"]} #{event["start_time"]} #{event["event_type"]}"
 
         puts "What do you want to do?"
@@ -72,6 +67,11 @@
         if selection == "1"
             Launchy.open(event["url"])
             event.save
+            @event = event
+            binding.pry
+            @user_event = UserEvent.create(user_id: @user.id, event_id: event.id)
+
+
         elsif selection == "2"
             puts "State Placeholder"
         else

@@ -36,9 +36,6 @@ def user_menu_choice (selection)
   end
 end
 
-def event_search
-  
-end
 
 def friend_search
   puts "What is your friend's username?"
