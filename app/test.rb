@@ -8,5 +8,4 @@ class EventApp
 
       main_menu_runner
 
-
-    end
+end
