@@ -3,7 +3,7 @@
 #   attr_reader :user, :username, :password
 
 #Basic runner for the main menu, moving through login options
-  def menu_runner
+  def main_menu_runner
 
     splash
 
@@ -111,6 +111,8 @@
 
     puts "Congratulations! You created an account!"
     @user.save
+    @user
+    user_menu_runner
     # Initialize user menu methods here
 
 
@@ -123,6 +125,7 @@
     if password_input == @user.password
       puts "Successful login!"
       @user
+      user_menu_runner
 
 
       # Initialize user menu methods here
