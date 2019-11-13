@@ -46,7 +46,7 @@ def friend_search
   if friend_username == "exit"
     user_menu_runner
   else
-    @friend = User.find_by(username: username_input)
+    @friend = User.find_by(username: friend_username)
     if !@friend
       puts "Please try again, or type exit"
       friend_search
@@ -57,10 +57,6 @@ def friend_search
     end
   end
   user_menu_runner
-end
-
-
-
 end
 
 def log_out

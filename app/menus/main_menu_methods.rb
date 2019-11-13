@@ -46,14 +46,14 @@
   def login_prompt(selection)
 
     #go to login if user desires
-    if menu_choice == "1"
+    if selection == "1"
       user_create
 
-    elsif menu_choice == "2"
+    elsif selection == "2"
       account_login
 
     # Or quit
-    elsif menu_choice == "3"
+  elsif selection == "3"
       exit
 
     #User should choose a valid option
