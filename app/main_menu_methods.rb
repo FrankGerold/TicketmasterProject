@@ -37,8 +37,9 @@
   def login_menu_display
     puts "Welcome to Ticket Search app!"
     puts "What would you like to do?"
-    puts "1. Create Account/Login"
-    puts "2. Exit"
+    puts "1. Create Account"
+    puts "2. Login"
+    puts "3. Exit"
   end
 
   #Prompt user for their menu choice, move to next section or quit based on user choice
@@ -47,10 +48,13 @@
 
     #go to login if user desires
     if menu_choice == "1"
+      user_create
+
+    elsif menu_choice == "2"
       account_login
 
     # Or quit
-  elsif menu_choice == "2"
+    elsif menu_choice == "3"
       exit
 
     #User should choose a valid option
@@ -66,21 +70,26 @@
 
     #Grab username from user. "Find or Create" based on input.
     username_input = user_prompt
-    @user = User.find_or_create_by(username: username_input)
-
-    #If the inputted user already has a name property, it existed beforehand.
-    if @user.name
-      #Move on to ask user to verify password
-      password_request (user.password)
+    @user = User.find_by(username: username_input)
+    if !@user
+      puts "Please try again"
+      account_login
     else
-      #If user instance has no other properties, it is new and needs to be filled out.
-      user_create
+      password_request (@user.password)
+    #
+    # #If the inputted user already has a name property, it existed beforehand.
+    # if @user
+    #   #Move on to ask user to verify password
+    # #   password_request (user.password)
+    # else
+    #   #If user instance has no other properties, it is new and needs to be filled out.
+    #   user_create
     end
   end
 
   #Menu option for creating new user
   def user_create
-    puts "User does not exist, creating new user now!"
+    @user = User.new
     puts "What is your name?"
     name_input = user_prompt
 
@@ -91,8 +100,14 @@
     password_input = user_prompt
 
     @user.name = name_input
-    @user.location = location_input
+    @user.state = location_input
     @user.password = password_input
+
+    puts "Congratulations! You created an account!"
+    puts @user
+    @user
+    # Initialize user menu methods here
+
 
   end
 
