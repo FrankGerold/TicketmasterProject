@@ -1,4 +1,4 @@
-class EventApp
+class
 
   attr_reader :user, :friend
 

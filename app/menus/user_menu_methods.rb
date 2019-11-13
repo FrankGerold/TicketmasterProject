@@ -37,7 +37,7 @@ def user_menu_choice (selection)
 end
 
 def event_search
-
+  
 end
 
 def friend_search

@@ -121,7 +121,7 @@
 
   #start process to test password
   def password_request
-    puts "Please enter your password."
+    puts "Please enter your password, or type quit."
     password_input = user_prompt
     if password_input == @user.password
       puts "Successful login!"
@@ -137,7 +137,7 @@
 
     else
       #try again
-      puts "Sorry, incorrect password. Try again."
+      puts "Sorry, incorrect password. Try again." # add esscape option
       password_request
     end
   end
