@@ -13,8 +13,12 @@ class Menu
   end
 
 
+
+
+
 #Helper Methods below!
 
+#splash screen that greets user on launch
   def splash
     puts " <<-SPLASH
       WELCOME TO THE TICKETMASTER SEARCHING EVENT CALENDAR APP
@@ -23,33 +27,12 @@ class Menu
       "
   end
 
-
+  #General method for grabbing user inputs
   def user_prompt
     user_input = gets.chomp
   end
 
-
-  def account_login
-    puts "Enter Username"
-
-    username_input = user_prompt
-    @user = User.find_or_create_by(username: username_input)
-
-    if @user.name
-      password_request
-    else
-
-    end
-  end
-
-
-  def password_request
-    puts "Please enter your password."
-
-    password_input = user_prompt
-    if password == user.password
-
-
+  #Menu options that pop up after splash screen
   def login_menu_display
     puts "Welcome to Ticket Search app!"
     puts "What would you like to do?"
@@ -57,22 +40,86 @@ class Menu
     puts "2. Exit"
   end
 
+  #Prompt user for their menu choice, move to next section or quit based on user choice
+  def login_prompt
+    menu_choice = user_prompt
 
-    def login_prompt
-      menu_choice = user_prompt
+    #go to login if user desires
+    if menu_choice = 1
+      account_login
 
-      if menu_choice = 1
-        account_login
+    # Or quit
+    elsif menu_choice = 2
+      exit
 
-      elsif menu_choice = 2
-        exit
-
-      else
-        puts "Sorry, incorrect option."
-        login_menu
-
-      end
+    #User should choose a valid option
+    else
+      puts "Sorry, incorrect option."
+      login_menu_display
     end
+  end
+
+  #Method for starting the login process
+  def account_login
+    puts "Enter Username"
+
+    #Grab username from user. "Find or Create" based on input.
+    username_input = user_prompt
+    @user = User.find_or_create_by(username: username_input)
+
+    #If the inputted user already has a name property, it existed beforehand.
+    if @user.name
+      #Move on to ask user to verify password
+      password_request (user.password)
+    else
+      #If user instance has no other properties, it is new and needs to be filled out.
+      user_create
+    end
+  end
+
+  #Menu option for creating new user
+  def user_create
+    puts "User does not exist, creating new user now!"
+    puts "What is your name?"
+    name_input = user_prompt
+
+    puts "What is your location? example: \"NY\""
+    location_input = user_prompt
+
+    puts "What is your password?"
+    password_input = user_prompt
+
+    @user.name = name_input
+    @user.location = location_input
+    @user.password = password_input
+
+  end
+
+  #start process to test password
+  def password_request (correct_password)
+    puts "Please enter your password."
+
+    password_input = user_prompt
+    if password_input == correct_password
+      puts "Successful login!"
+      # Initialize user menu methods here
+
+    #user can quit this process
+    elsif password_input == "quit" || "exit"
+      exit
+
+    else
+      #try again
+      puts "Sorry, incorrect password. Try again."
+      password_request
+    end
+  end
+
+
+
+
+
+
 
 
 
