@@ -1,49 +1,28 @@
 def user_menu_runner
 
-  user_menu_display
+  menu_selection = @prompt.select(%q'
+  User Menu
 
-  user_menu_choice(user_prompt)
+  Select an Option
+  ', ["Search for Event", "Find a Friend", "Logout"])
 
-
-end
-
-
-
-def user_menu_display
-  puts "User Menu"
-  puts ""
-  puts "Select an Option"
-  puts "1. Search for Event"
-  puts "2. Find a Friend"
-  puts "3. Logout"
-end
-
-def user_menu_choice (selection)
-  if selection == "1"
-    event_search
-
-  elsif selection == "2"
+  case menu_selection
+  when "Search for Event"
+    event_search_options
+  when "Find a Friend"
     friend_search
-
-  elsif selection == "3"
+  when "Logout"
     log_out
-
-  else
-    puts "Please select a valid option."
-    user_menu_display
-    user_menu_choice(user_prompt)
-
   end
 end
 
 
 def friend_search
-  puts "What is your friend's username?"
-  friend_username = user_prompt
-  if friend_username == "exit"
+  friend_input = @prompt.ask("What is your friend's username?")
+  if friend_input == "exit"
     user_menu_runner
   else
-    @friend = User.find_by(username: friend_username)
+    @friend = User.find_by(username: friend_input)
     if !@friend
       puts "Please try again, or type exit"
       friend_search
