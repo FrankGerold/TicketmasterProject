@@ -1,6 +1,6 @@
 
     def event_search
-        events = Event.events 
+        events = Event.events
         puts "What State would you like to search in? Ex: 'NY'"
         location_input = user_prompt
         puts "What would you like to search by?"
@@ -17,16 +17,16 @@
             search_by_keyword(keyword_input, location)
         elsif input == "2"
             counter = 0
-            events_hash = {} 
+            events_hash = {}
             all_events = event_api_call(location)
             good_events = all_events.select do |event|
                 event["classifications"][0]["genre"]  && event["classifications"][0]["genre"]["name"]
             end
-            event_types = good_events.map { |event| event["classifications"][0]["genre"]["name"]}.uniq   
-            
-            
+            event_types = good_events.map { |event| event["classifications"][0]["genre"]["name"]}.uniq
+
+
             event_types.each do |e|
-                counter += 1 
+                counter += 1
                 event = events_hash[counter] = e
                 puts "#{counter}.)   #{e}"
             end
@@ -87,7 +87,7 @@
             event_detailed_view(event_picked)
         else
             puts "Invalid Selection. Please Try Again."
-            present_events_array(events)
+            present_events_array(array)
         end
     end
 

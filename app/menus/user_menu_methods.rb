@@ -14,19 +14,25 @@ def user_menu_display
   puts ""
   puts "Select an Option"
   puts "1. Search for Event"
-  puts "2. Find a Friend"
-  puts "3. Logout"
+  puts "2. My List"
+  puts "3. Find a Friend"
+  puts "4. Logout"
 end
 
 def user_menu_choice (selection)
   if selection == "1"
     event_search
 
-  elsif selection == "2"
+  elsif selection == "3"
     friend_search
 
-  elsif selection == "3"
+  elsif selection == "4"
     log_out
+
+  elsif selection == "2"
+    puts "My Events"
+    puts ""
+    my_list
 
   else
     puts "Please select a valid option."
@@ -50,6 +56,8 @@ def friend_search
     else
       puts "We found your friend!"
       puts @friend.name
+      puts ""
+      friend_list
       #add friend event list logic here to print log_out
     end
   end
