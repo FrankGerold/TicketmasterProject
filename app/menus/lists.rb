@@ -5,6 +5,9 @@ end
 
 def friend_list
 
+  local_user = @friend.id
+  @friend = User.find(local_user)
+
   friends = get_list (@friend)
 
   present_events_array(friends)
@@ -12,6 +15,8 @@ def friend_list
 end
 
 def my_list
+  local_user = @user.id
+  @user = User.find(local_user)
 
   user_list = get_list (@user)
 
