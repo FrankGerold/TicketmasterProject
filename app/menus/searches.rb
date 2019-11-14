@@ -20,7 +20,7 @@
             events_hash = {} 
             all_events = event_api_call(location)
             good_events = all_events.select do |event|
-                event["classifications"][0]["genre"]  && event["classifications"][0]["genre"]["name"]
+                event["classifications"][0]["genre"]
             end
             event_types = good_events.map { |event| event["classifications"][0]["genre"]["name"]}.uniq   
             
@@ -33,7 +33,7 @@
             puts "Which event genre are you interested in?"
             event_type_selection = user_prompt
             type_picked = events_hash[event_type_selection.to_i]
-            sorted_events = all_events.select do |event|
+            sorted_events = good_events.select do |event|
                 type_picked == event["classifications"][0]["genre"]["name"]
             end
             search_by_event_type(sorted_events)
