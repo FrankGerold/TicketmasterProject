@@ -8,7 +8,6 @@
     splash
 
     login_menu_display
-    login_prompt(user_prompt)
 
   end
 
@@ -34,107 +33,59 @@
   end
 
   #Menu options that pop up after splash screen
+
   def login_menu_display
     puts "Welcome to Ticket Search app!"
-    puts "What would you like to do?"
-    puts "1. Create Account"
-    puts "2. Login"
-    puts "3. Exit"
-  end
-
-  #Prompt user for their menu choice, move to next section or quit based on user choice
-  def login_prompt(selection)
-
-    #go to login if user desires
-    if selection == "1"
+    login_choice = @prompt.select("What would you like to do?", ["Create Account", "Login", "Exit"])
+    case login_choice
+    when "Create Account"
       user_create
-
-    elsif selection == "2"
+      system "clear"
+    when "Login"
       account_login
-
-    # Or quit
-  elsif selection == "3"
+      puts 'blah'
+      system "clear"
+    when "Exit"
       exit
-
-    #User should choose a valid option
-    else
-      puts "Sorry, incorrect option."
-      login_menu_display
-      login_prompt(user_prompt)
-
     end
   end
 
   #Method for starting the login process
   def account_login
-    puts "Enter Username"
-
     #Grab username from user. "Find or Create" based on input.
-    username_input = user_prompt
+    username_input = @prompt.ask("Enter Username")
     @user = User.find_by(username: username_input)
     if !@user
       puts "Please try again"
       account_login
     else
       password_request
-    #
-    # #If the inputted user already has a name property, it existed beforehand.
-    # if @user
-    #   #Move on to ask user to verify password
-    # #   password_request (user.password)
-    # else
-    #   #If user instance has no other properties, it is new and needs to be filled out.
-    #   user_create
     end
   end
 
   #Menu option for creating new user
   def user_create
     # Users.destroy_all
-    @user = User.new
-    puts "What is your name?"
-    name_input = user_prompt
-
-    puts "What is your desired Username?"
-    username_input = user_prompt
-
-    puts "What is your location? example: \"NY\""
-    location_input = user_prompt
-
-    puts "What is your password?"
-    password_input = user_prompt
-
-    @user.name = name_input
-    @user.state = location_input
-    @user.password = password_input
-    @user.username = username_input
-
-
+    name_input = @prompt.ask("What is your name?")
+    username_input = @prompt.ask("What is your desired Username?")
+    location_input =  @prompt.ask("What is your location? example: \"NY\"")
+    password_input = @prompt.ask("What is your password?")
+    @user = User.create(name: name_input, state: location_input, password: password_input, username: username_input)
     puts "Congratulations! You created an account!"
-    @user.save
-    @user
     user_menu_runner
     # Initialize user menu methods here
-
-
   end
 
   #start process to test password
   def password_request
-    puts "Please enter your password, or type quit."
-    password_input = user_prompt
+    password_input = @prompt.mask("Please enter your password, or type quit.")
     if password_input == @user.password
       puts "Successful login!"
       @user
       user_menu_runner
-
-
-      # Initialize user menu methods here
-
     #user can quit this process
     elsif password_input == "quit" || password_input == "exit"
       exit
-
     else
       #try again
       puts "Sorry, incorrect password. Try again." # add esscape option
