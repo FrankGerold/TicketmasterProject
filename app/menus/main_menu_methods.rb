@@ -53,11 +53,14 @@
   #Method for starting the login process
   def account_login
     #Grab username from user. "Find or Create" based on input.
-    username_input = @prompt.ask("Enter Username")
+    username_input = @prompt.ask("Enter Username, or exit.")
     @user = User.find_by(username: username_input)
     if !@user
       puts "Please try again"
       account_login
+    elsif username_input == "quit" || password_input == "exit"
+      exit
+    else
     else
       password_request
     end
