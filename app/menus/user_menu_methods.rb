@@ -4,7 +4,7 @@ def user_menu_runner
   User Menu
 
   Select an Option
-  ', ["Search for Event", "Find a Friend", "Logout"])
+  ', ["Search for Event", "My List", "Find a Friend", "Logout"])
 
 
   case menu_selection
@@ -14,6 +14,8 @@ def user_menu_runner
     friend_search
   when "Logout"
     log_out
+  when "My List"
+    my_list
   end
 end
 

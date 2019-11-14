@@ -35,7 +35,7 @@ def user_detailed_view(event)
       user_event_list = @user.user_events
       dead_event = user_event_list.find do
           |dead_event|
-          dead_event.id == event.id
+          dead_event.event_id == event.id
         end
         dead_event.destroy
         local_user = @user.id

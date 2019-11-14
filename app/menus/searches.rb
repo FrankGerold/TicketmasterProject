@@ -67,7 +67,7 @@
         event_names = events_array.map { |event| event.name }
         selected_event_name = @prompt.select('Pick an event.', event_names << "Go back.")
         selected_event = events_array.find { |event| event.name  == selected_event_name }
-        selected_event_name == "Go back." ?  event_search_options : event_detailed_view(selected_event)
+        selected_event_name == "Go back." ?  user_menu_runner : event_detailed_view(selected_event)
     end
 
     def event_detailed_view(event)
