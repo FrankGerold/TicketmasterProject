@@ -1,6 +1,6 @@
 class EventApp
 
-  attr_reader :user, :friend, :event, :user_event
+  attr_reader :user, :friend, :event, :user_event, :user_list
 
   def run
 
