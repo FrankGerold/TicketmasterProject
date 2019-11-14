@@ -57,8 +57,16 @@ end
 
 def user_detailed_menu(event, selection)
     if selection == "1"
-      @user_event =
-      @user_event.delete
+      user_event_list = @user.user_events
+      dead_event = user_event_list.find do
+        |dead_event|
+        dead_event.id == event.id
+      end
+
+      dead_event.destroy
+      local_user = @user.id
+      @user = User.find(local_user)
+      @user_list = get_list (@user)
 
         user_events_array(@user_list)
 

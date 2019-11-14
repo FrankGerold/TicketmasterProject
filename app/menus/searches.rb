@@ -39,6 +39,7 @@
             search_by_event_type(sorted_events)
         else
             puts "Incorrect Selection. Please Try Again"
+            event_search
         end
     end
 
@@ -51,20 +52,29 @@
 
 
     def search_by_keyword(keyword,location)
+        events = Event.events
         response = RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?stateCode=#{location}&keyword=#{keyword}&size=3&sort=date,asc&apikey=yIOyaSRFXNnDOWUaFSGcLnMUePkdUpJG")
         events_hash = JSON.parse(response.body)
-            binding.pry
+        if !events_hash["_embedded"]
+          puts ""
+          puts "Sorry, no results!"
+          puts ""
+          event_search
+
+        else
         events_array = events_hash["_embedded"]["events"]
-        events_array.each do |event|
-            event_name = event["name"]
-            event_type = event["classifications"][0]["genre"]["name"]
-            event_date = event["dates"]["start"]["localDate"]
-            event_time = event["dates"]["start"]["localTime"]
-            event_url = event["url"]
-            events << Event.new(name: event_name, state: "NY", date: event_date, event_type: event_type, url: event_url, start_time: event_time)
+
+          events_array.each do |event|
+              event_name = event["name"]
+              event_type = event["classifications"][0]["genre"]["name"]
+              event_date = event["dates"]["start"]["localDate"]
+              event_time = event["dates"]["start"]["localTime"]
+              event_url = event["url"]
+              events << Event.new(name: event_name, state: "NY", date: event_date, event_type: event_type, url: event_url, start_time: event_time)
+          end
+          Event.events = events
+          present_events_array(events)
         end
-        Event.events = events
-        present_events_array(events)
 
     end
 
@@ -106,7 +116,6 @@
             Launchy.open(event["url"])
             event.save
             @event = event
-            binding.pry
             @user_event = UserEvent.create(user_id: @user.id, event_id: event.id)
 
 
