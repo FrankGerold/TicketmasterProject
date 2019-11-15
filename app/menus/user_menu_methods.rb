@@ -39,26 +39,40 @@ def friend_search
   end
 end
 
+def reload
+  friend_id = @friend.id
+  user_id = @user.id
+  friendship_id = @friendship.id
+
+  @friend = User.find(friend_id)
+  @user = User.find(user_id)
+  @friendship = Friendship.find(friendship_id)
+
+end
+
 def add_friend(friend)
-  Friendship.create(user_id: @user.id, friend_id: friend.id)
+  @friendship = Friendship.create(user_id: @user.id, friend_id: friend.id)
   user_menu_runner
-end 
+end
 
 def my_friends
+
+    user_id = @user.id
+    @user = User.find(user_id)
+
   friends_array =[]
-  binding.pry
-  @user.friendships.each do |friendship|
-    if friendship.user_id == @user.id 
+
+  Friendship.all.each do |friendship|
+     if friendship.user_id == @user.id
       friend_instance = User.find(friendship.friend_id)
       friends_array << friend_instance
-    elsif friendship.friend_id == @user.id 
-      binding.pry
+    else friendship.friend_id == @user.id
       friend_instance = User.find(friendship.user_id)
       friends_array << friend_instance
     end
   end
-  binding.pry
-  present_friend_list(friends_array)
+
+  present_friend_list(friends_array.uniq)
 end
 
 def present_friend_list(friend_array)
