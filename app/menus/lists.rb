@@ -32,6 +32,7 @@ def user_events_array(events_array)
     selected_event_name == "Go back." ?  user_menu_runner : user_detailed_view(selected_event)
 end
 
+
 def user_detailed_view(event)
     puts "#{event["name"]} #{event["date"]} #{event["start_time"]} #{event["event_type"]}"
     option_select = @prompt.select("What do you want to do?", ["Delete Event", "Go Back"])

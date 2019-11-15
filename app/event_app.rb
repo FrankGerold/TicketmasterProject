@@ -1,7 +1,7 @@
 class EventApp
 
 
-  attr_reader :user, :friend, :event, :user_event
+  attr_reader :user, :friend, :event, :user_event, :friendship
 
   def run
     @prompt = TTY::Prompt.new

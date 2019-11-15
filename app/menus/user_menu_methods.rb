@@ -4,7 +4,7 @@ def user_menu_runner
   User Menu
 
   Select an Option
-  ', ["Search for Event", "My List", "Find a Friend", "Logout"])
+  ', ["Search for Event", "My Events", "Find a Friend", "My Friends", "Logout"])
 
 
   case menu_selection
@@ -14,14 +14,15 @@ def user_menu_runner
     friend_search
   when "Logout"
     log_out
-  when "My List"
+  when "My Events"
     my_list
+  when "My Friends"
+    my_friends
   end
 end
 
-
 def friend_search
-  friend_input = @prompt.ask("What is your friend's username?")
+  friend_input = @prompt.ask("What is your friend's username? Type 'exit' to go to the Main Menu.")
   if friend_input == "exit"
     user_menu_runner
   else
@@ -32,13 +33,39 @@ def friend_search
     else
       puts "We found your friend!"
       puts @friend.name
-      puts ""
-      friend_list
+      add_friend(@friend)
       #add friend event list logic here to print log_out
     end
   end
-  user_menu_runner
 end
+
+def add_friend(friend)
+  Friendship.create(user_id: @user.id, friend_id: friend.id)
+  user_menu_runner
+end 
+
+def my_friends
+  friends_array =[]
+  @user.friendships.each do |friendship|
+    if friendship.user_id == @user.id 
+      friend_instance = User.find(friendship.friend_id)
+      friends_array << friend_instance
+    elsif friendship.friend_id == @user.id 
+      friend_instance = User.find(friendship.user_id)
+      friends_array << friend_instance
+    end
+  end
+  present_friend_list(friends_array)
+end
+
+def present_friend_list(friend_array)
+  friend_names = friend_array.map { |friend| friend.name}
+  selected_name = @prompt.select("Pick a friend.", friend_names << "Go back.")
+  selected_friend = friend_array.find { |friend| friend.name  == selected_name }
+  @friend = selected_friend
+  selected_name == "Go back." ?  user_menu_runner : present_friend_events_array(friend_events)
+end
+
 
 def log_out
   main_menu_runner
