@@ -2,17 +2,12 @@ def get_list (user_instance)
   list = user_instance.events
 end
 
-
-def friend_list
-
-  local_user = @friend.id
-  @friend = User.find(local_user)
-
-  friends = get_list (@friend)
-
-  present_events_array(friends)
-
+def friend_events
+  get_list(@friend)
 end
+
+
+
 
 def my_list
   local_user = @user.id
@@ -20,18 +15,24 @@ def my_list
 
   user_list = get_list (@user)
 
-  user_events_array(user_list)
+  present_user_events_array(user_list)
 
 end
 
 
-def user_events_array(events_array)
+def present_user_events_array(events_array)
     event_names = events_array.map { |event| event.name }
     selected_event_name = @prompt.select('Pick an event.', event_names << "Go back.")
     selected_event = events_array.find { |event| event.name  == selected_event_name }
     selected_event_name == "Go back." ?  user_menu_runner : user_detailed_view(selected_event)
 end
 
+def present_friend_events_array(events_array)
+  event_names = events_array.map { |event| event.name }
+  selected_event_name = @prompt.select('Pick an event.', event_names << "Go back.")
+  selected_event = events_array.find { |event| event.name  == selected_event_name }
+  selected_event_name == "Go back." ?  user_menu_runner : friend_event_detailed_view(selected_event)
+end
 
 def user_detailed_view(event)
     puts "#{event["name"]} #{event["date"]} #{event["start_time"]} #{event["event_type"]}"
@@ -44,7 +45,6 @@ def user_detailed_view(event)
           dead_event.event_id == event.id
         end
         dead_event.destroy
-
         local_user = @user.id
         @user = User.find(local_user)
         @user_list = get_list (@user)
@@ -52,8 +52,24 @@ def user_detailed_view(event)
         puts "Event deleted."
         user_menu_runner
     when "Go Back"
-        user_events_array(Event.events)
+        present_user_events_array(Event.events)
     end
+end
+
+def friend_event_detailed_view(event)
+  puts "#{event["name"]} #{event["date"]} #{event["start_time"]} #{event["event_type"]}"
+  option_select = @prompt.select("What do you want to do?", ["Buy tickets and Save to my List", "Go Back"])
+  case option_select
+  when "Buy tickets and Save to my List"
+      Launchy.open(event["url"])
+      event.save
+
+      UserEvent.create(user_id: @user.id, event_id: event.id)
+      user_menu_runner
+  when "Go Back"
+    binding.pry
+      present_friend_events_array(friend_events)
+  end
 end
 
 #
