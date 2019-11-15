@@ -16,10 +16,24 @@
             genre_array = genre_filter(location)
             search_results(genre_array)
         when "Surprise Me!"
+          surprise_event = genre_api_call(location).sample
+          single_event(surprise_event, location)
 
         when "Go back."
             user_menu_runner
         end
+    end
+
+    def single_event(event, location)
+      event_name = event["name"]
+      event_type = event["classifications"][0]["genre"]["name"]
+      event_state = location
+      event_date = event["dates"]["start"]["localDate"]
+      event_time = event["dates"]["start"]["localTime"]
+      event_url = event["url"]
+      events << Event.new(name: event_name, state: event_state, date: event_date, event_type: event_type, url: event_url, start_time: event_time)
+
+
     end
 
     def genre_api_call(location)
@@ -54,9 +68,10 @@
             event_name = event["name"]
             event_type = event["classifications"][0]["genre"]["name"]
             event_date = event["dates"]["start"]["localDate"]
+            event_state = location
             event_time = event["dates"]["start"]["localTime"]
             event_url = event["url"]
-            events << Event.new(name: event_name, state: "NY", date: event_date, event_type: event_type, url: event_url, start_time: event_time)
+            events << Event.new(name: event_name, state: event_state, date: event_date, event_type: event_type, url: event_url, start_time: event_time)
         end
         Event.events = events
         present_events_array(events)

@@ -20,8 +20,19 @@
 #splash screen that greets user on launch
   def splash
     puts " <<-SPLASH
-      WELCOME TO THE TICKETMASTER SEARCHING EVENT CALENDAR APP
-        ^REPLACE THIS WITH ACTUAL PROJECT NAME AND COOL ASCII LOGO STRING HEREDOC LATER
+
+
+    _________  __  __   ______   _________   _______    ______
+   /________/\/_/\/_/\ /_____/\ /________/\ /______/\  /_____/\
+   \__.::.__\/\:\ \:\ \\::::_\/_\__.::.__\/ \::::__\/__\:::_ \ \
+     /_\::\ \  \:\ \:\ \\:\/___/\  \::\ \    \:\ /____/\\:\ \ \ \
+     \:.\::\ \  \:\ \:\ \\_::._\:\  \::\ \    \:\\_  _\/ \:\ \ \ \
+      \: \  \ \  \:\_\:\ \ /____\:\  \::\ \    \:\_\ \ \  \:\_\ \ \
+       \_____\/   \_____\/ \_____\/   \__\/     \_____\/   \_____\/
+
+   JUST GO: The world's greatest social event planning calendar app.
+
+
         SPLASH
       "
   end
@@ -58,9 +69,8 @@
     if !@user
       puts "Please try again"
       account_login
-    elsif username_input == "quit" || password_input == "exit"
+    elsif username_input == "quit" || username_input == "exit"
       exit
-    else
     else
       password_request
     end
