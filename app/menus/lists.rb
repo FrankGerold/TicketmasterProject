@@ -43,6 +43,7 @@ def user_detailed_view(event)
           dead_event.event_id == event.id
         end
         dead_event.destroy
+
         local_user = @user.id
         @user = User.find(local_user)
         @user_list = get_list (@user)
