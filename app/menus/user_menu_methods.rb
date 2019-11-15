@@ -46,15 +46,18 @@ end
 
 def my_friends
   friends_array =[]
+  binding.pry
   @user.friendships.each do |friendship|
     if friendship.user_id == @user.id 
       friend_instance = User.find(friendship.friend_id)
       friends_array << friend_instance
     elsif friendship.friend_id == @user.id 
+      binding.pry
       friend_instance = User.find(friendship.user_id)
       friends_array << friend_instance
     end
   end
+  binding.pry
   present_friend_list(friends_array)
 end
 
