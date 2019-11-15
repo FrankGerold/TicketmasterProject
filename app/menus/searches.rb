@@ -11,10 +11,10 @@
         when "Keyword"
             keyword_input = @prompt.ask("Please input Keyword")
             keyword_array = keyword_api_call(keyword_input,location)
-            search_results(keyword_array)
+            search_results(keyword_array,location)
         when "Genre"
             genre_array = genre_filter(location)
-            search_results(genre_array)
+            search_results(genre_array,location)
         when "Surprise Me!"
           surprise_event = genre_api_call(location).sample
           single_event(surprise_event, location)
@@ -62,7 +62,7 @@
         end
     end
 
-    def search_results(event_array)
+    def search_results(event_array, location)
         events = Event.events = []
         event_array.each do |event|
             event_name = event["name"]

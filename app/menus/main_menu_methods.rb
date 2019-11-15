@@ -37,11 +37,7 @@
    SPLASH
   end
 
-  #General method for grabbing user inputs
-  def user_prompt
-    #user_input =
-    STDIN.gets.chomp
-  end
+  
 
   #Menu options that pop up after splash screen
 
@@ -54,7 +50,6 @@
       system "clear"
     when "Login"
       account_login
-      puts 'blah'
       system "clear"
     when "Exit"
       exit
@@ -66,11 +61,11 @@
     #Grab username from user. "Find or Create" based on input.
     username_input = @prompt.ask("Enter Username, or exit.")
     @user = User.find_by(username: username_input)
-    if !@user
+    if username_input == "quit" || username_input == "exit"
+      login_menu_display
+    elsif !@user
       puts "Please try again"
       account_login
-    elsif username_input == "quit" || username_input == "exit"
-      exit
     else
       password_request
     end
