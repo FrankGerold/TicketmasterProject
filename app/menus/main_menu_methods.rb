@@ -19,7 +19,7 @@
 
 #splash screen that greets user on launch
   def splash
-    puts " <<-SPLASH
+    puts <<-'SPLASH'
 
 
     _________  __  __   ______   _________   _______    ______
@@ -30,11 +30,11 @@
       \: \  \ \  \:\_\:\ \ /____\:\  \::\ \    \:\_\ \ \  \:\_\ \ \
        \_____\/   \_____\/ \_____\/   \__\/     \_____\/   \_____\/
 
+
    JUST GO: The world's greatest social event planning calendar app.
 
 
-        SPLASH
-      "
+   SPLASH
   end
 
   #General method for grabbing user inputs
